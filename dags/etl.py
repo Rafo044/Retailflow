@@ -1,8 +1,12 @@
 
 from pandas.core.reshape.encoding import DataFrame
-from airflow.sdk import task,dag
+from airflow.sdk import task,dag,asset,Asset
 from pandas as pd
 from airflow.models import Variable
+
+
+
+
 
 path = Variable.get("path")
 
