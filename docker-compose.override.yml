@@ -11,6 +11,8 @@ services:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 5s
       retries: 5
+    networks:
+      - airflow
 
   metabase:
     image: metabase/metabase:latest
@@ -25,3 +27,5 @@ services:
       retries: 5
     depends_on:
       - mysql
+    networks:
+      - airflow
