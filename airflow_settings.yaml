@@ -7,6 +7,7 @@
 
 # For issues create an issue ticket here: https://github.com/astronomer/astro-c
 AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://postgres:secret123@pg-container:5432/airflow_metadata
+AIRFLOW__CORE__SQL_ALCHEMY_CONN=mysql+mysqlconnector://admin:admin@mysql:3306/retilflow
 
 
 
