@@ -1,23 +1,29 @@
-import re
 from pandas import DataFrame
-from airflow.sdk import task, dag, Asset
+from airflow.sdk import task, dag
 import pandas as pd
 from datetime import datetime
 from io import StringIO
-from airflow.providers.mysql.hooks.mysql import MySqlHook
 import requests
+from airflow.hooks.base import BaseHook
+from sqlalchemy import create_engine
 
 url = "https://raw.githubusercontent.com/Rafo044/Retailflow/refs/heads/main/data/retaildata.csv"
+conn = BaseHook.get_connection("retailflow")
+conn_str = f"mysql+mysqldb://{conn.login}:{conn.password}@{conn.host}:{conn.port}/{conn.schema}"
+engine = create_engine(conn_str)
+
 
 # ========   Extract Transform  Load  ===========
 
 @dag(
     schedule="@daily",
-    start_date=datetime(2025, 9, 1),  # keçmiş tarix
+    start_date=datetime(2025, 1, 9),
     catchup=False,
     tags=["retail", "etl"]
 )
 def etl():
+
+    #======== Extract  ===========
 
     @task()
     def extract() -> DataFrame:
@@ -29,7 +35,8 @@ def etl():
             raise Exception("Failed to fetch data")
         return df
 
-    #Transform
+    #======== Transform  ===========
+
     @task()
     def handling(df: DataFrame) -> DataFrame:
         df = df.drop_duplicates(subset=['invoice_no'])
@@ -39,7 +46,6 @@ def etl():
     @task()
     def total_revinue(df: DataFrame) -> DataFrame:
         df["total_revinue"] = pd.to_numeric(df["quantity"], errors="coerce") * pd.to_numeric(df["price"], errors="coerce")
-        # average_order_value row-level üçün sadələşdirilmiş
         df["average_order_value"] = df["total_revinue"] / 1.0
         df["total_quantity_solid"] = df["quantity"].sum()
         return df
@@ -61,15 +67,17 @@ def etl():
         df['category'] = df['category'].astype(str).str.strip().str.title()
         return df
 
-    #Load
+    #======== Load  ===========
+
     @task()
     def load(df: DataFrame):
-        hook = MySqlHook(mysql_conn_id='retailflow')
-        target_fields = list(df.columns)
-        rows = [tuple(x) for x in df[target_fields].to_numpy()]
-        hook.insert_rows(table='transformed_data', rows=rows, target_fields=target_fields)
+        df.to_sql(
+            name="transformed_data",
+            con=engine,
+            if_exists="append",
+            index=False
+        )
 
-    # Task chain
     df_extracted = extract()
     df_handled = handling(df_extracted)
     df_total = total_revinue(df_handled)
