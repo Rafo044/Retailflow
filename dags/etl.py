@@ -5,6 +5,7 @@ from pandas as pd
 import pandas as pd
 from datetime import datetime
 from airflow.providers.postgres.hooks.postgres import PostgresHook
+from airflow.providers.mysql.hooks.mysql import MySqlHook
 
 
 
@@ -63,7 +64,7 @@ def etl():
     #Load
     @task
     def load(df):
-        hook = PostgresHook(postgres_conn_id='retailflow')
+        hook = MySqlHook(mysql_conn_id='retailflow')
         hook.insert_rows(table='transformed_data', rows=df.to_dict('records'))
 
    load(normalization(month_weekday(total_revinue(handling(extract())))))
