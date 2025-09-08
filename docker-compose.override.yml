@@ -6,8 +6,26 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./mysql-init:/docker-entrypoint-initdb.d # optional init scripts
+      - ./mysql-init:/docker-entrypoint-initdb.d
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 5s
       retries: 5
+    networks:
+      - airflow
+
+  metabase:
+    image: metabase/metabase:latest
+    container_name: airflow-metabase
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./metabase:/metabase
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 5s
+      retries: 5
+    depends_on:
+      - mysql
+    networks:
+      - airflow
