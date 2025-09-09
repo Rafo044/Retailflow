@@ -3,3 +3,4 @@ pandas
 requests
 pyarrow
 sqlalchemy
+apache-airflow-providers-amazon[s3fs]
