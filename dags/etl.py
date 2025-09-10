@@ -25,7 +25,7 @@ engine = create_engine(conn_str)
 def etl():
 
     #======== Extract  ===========
-    #@log_decorator
+    @log_decorator
     @task
     def extract() -> DataFrame:
         response = requests.get(url)
@@ -106,7 +106,7 @@ def etl():
             return df
 
     # --- price ---
-    #@log_decorator
+    @log_decorator
     @task
     def clean_price(df: DataFrame) -> DataFrame:
         try:
