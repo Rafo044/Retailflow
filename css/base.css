@@ -1,7 +1,7 @@
 html {
-    /* The nav header is 5.01875rem high, plus 20px for the margin-top of the
+    /* The nav header is 3.5rem high, plus 20px for the margin-top of the
        main container. */
-    scroll-padding-top: calc(5.01875rem + 20px);
+    scroll-padding-top: calc(3.5rem + 20px);
 }
 
 body > .container {
@@ -22,33 +22,29 @@ body > .container {
 }
 
 pre, code {
-    color: #000;
-    border: none;
+    background: #073642;
+    color: #839496;
+    border: 1px solid rgba(0,43,54,0.95);
     border-radius: 0.25rem;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.4);
 }
 
 pre {
-    padding: 1em;
+    padding: 0.5em;
 }
 
 code {
-    padding: 3px;
+    padding: 1px 3px;
 }
 
 pre code {
-    box-shadow: none;
+    border: none;
     /* Override styles from hljs theme */
     background: transparent !important;
     padding: 0 !important;
 }
 
 a code {
-    color: #2196f3;
-}
-
-a:hover code {
-    color: #0a6ebd;
+    color: #2aa198;
 }
 
 kbd {
@@ -76,14 +72,16 @@ footer {
 
 .admonition {
     margin-bottom: 1rem;
+    border: 1px solid rgba(0,43,54,0.95);
     border-radius: 0.25rem;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+    color: #fff;
 }
 
 .admonition > .admonition-title {
     margin: 0;
     padding: 0.75rem 1rem;
-    background: rgba(0,0,0,0.03);
+    background: #444;
+    border-bottom: 1px solid rgba(0,43,54,0.95);
     border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
     font-size: 1rem;
 }
@@ -99,24 +97,33 @@ footer {
 }
 
 .admonition > *:last-child {
-    padding-bottom: 1rem;
+    margin-bottom: 1rem;
 }
 
 /* Style each kind of admonition. */
 
+.admonition.note, .admonition.note > .admonition-title {
+    border-color: #268bd2;
+}
+
 .admonition.note > .admonition-title {
-    background: #9c27b0;
-    color: #fff;
+    background: #268bd2;
+}
+
+.admonition.warning, .admonition.warning > .admonition-title {
+    border-color: #cb4b16;
 }
 
 .admonition.warning > .admonition-title {
-    background: #ff9800;
-    color: #fff;
+    background: #cb4b16;
+}
+
+.admonition.danger, .admonition.danger > .admonition-title {
+    border-color: #d33682;
 }
 
 .admonition.danger > .admonition-title {
-    background: #de1b22;
-    color: #fff;
+    background: #d33682;
 }
 
 /*
@@ -129,13 +136,17 @@ footer {
 .bs-sidebar.affix {
     position: -webkit-sticky;
     position: sticky;
-    /* The nav header is 5.01875rem high, plus 20px for the margin-top of the
+    /* The nav header is 3.5rem high, plus 20px for the margin-top of the
        main container. */
-    top: calc(5.01875rem + 20px);
+    top: calc(3.5rem + 20px);
 }
 
 .bs-sidebar.card {
     padding: 0;
+}
+
+.bs-sidebar > .card {
+    background: #073642 !important;
 }
 
 /* Toggle (vertically flip) sidebar collapse icon */
@@ -206,15 +217,15 @@ h1:hover .headerlink, h2:hover .headerlink, h3:hover .headerlink, h4:hover .head
 @media (max-width: 991.98px) {
     .navbar-collapse.show {
         overflow-y: auto;
-        max-height: calc(100vh - 5.01875rem);
+        max-height: calc(100vh - 3.5rem);
     }
 }
 
 .dropdown-item.open {
-    color: #141414;
-    background: #f8f9fa -webkit-gradient(linear, left top, left bottom,
-                                         from(#f9fafb), to(#f8f9fa)) repeat-x;
-    background: #f8f9fa linear-gradient(180deg, #f9fafb, #f8f9fa) repeat-x;
+    color: rgba(255,255,255,0.75);
+    background: #002B36 -webkit-gradient(linear, left top, left bottom,
+                                         from(#002b36), to(#002B36)) repeat-x;
+    background: #002B36 linear-gradient(180deg, #002b36, #002B36) repeat-x;
 }
 
 .dropdown-submenu > .dropdown-menu {
@@ -244,7 +255,7 @@ h1:hover .headerlink, h2:hover .headerlink, h3:hover .headerlink, h4:hover .head
 @media (min-width: 992px) {
     .dropdown-menu {
         overflow-y: auto;
-        max-height: calc(100vh - 5.01875rem);
+        max-height: calc(100vh - 3.5rem);
     }
 
     .dropdown-submenu {
