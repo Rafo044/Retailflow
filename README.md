@@ -103,8 +103,15 @@ AIRFLOW__COMMON_IO__XCOM_OBJECTSTORAGE_COMPRESSION="zip"
 - If you want another XCom connection, change AIRFLOW__COMMON_IO__XCOM_OBJECTSTORAGE_PATH.
 
 
+## 8. Airflow UI
 
-## 8. File and screenshot locations
+### Airflow dag view
+![Airflow Dag view](docs/images/dagview.png)
+
+### Airflow connection list
+![Airflow connection list](docs/images/airflow_conn_list.png)
+
+## 9. File and screenshot locations
 
 - Pipeline image: docs/images/pipline.png
 - MinIO connection screenshot: docs/images/retail_minio_conn.png
