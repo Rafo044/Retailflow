@@ -20,7 +20,6 @@ logging.basicConfig(
 def log_decorator(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
-        # Printləri logging.info-ya yönləndirmək üçün override
         import builtins
         original_print = builtins.print
         builtins.print = lambda *p, **k: logging.info(" ".join(map(str, p)))
@@ -28,5 +27,5 @@ def log_decorator(func):
         try:
             return func(*args, **kwargs)
         finally:
-            builtins.print = original_print  # print-i geri qaytar
+            builtins.print = original_print
     return wrapper
