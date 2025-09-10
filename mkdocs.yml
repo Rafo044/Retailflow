@@ -1,4 +1,6 @@
 
 
-site_name: My Docs
+site_name: Retail Flow
+theme: 
+    name: materia
 

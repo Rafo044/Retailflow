@@ -6,6 +6,7 @@ from io import StringIO
 import requests
 from airflow.hooks.base import BaseHook
 from sqlalchemy import create_engine
+from log import log_decorator
 
 url = "https://raw.githubusercontent.com/Rafo044/Retailflow/refs/heads/main/data/retaildata.csv"
 conn = BaseHook.get_connection("retailflow")
@@ -24,8 +25,8 @@ engine = create_engine(conn_str)
 def etl():
 
     #======== Extract  ===========
-    @log_decorator
-    @task()
+    #@log_decorator
+    @task
     def extract() -> DataFrame:
         response = requests.get(url)
         print(response.status_code)
@@ -37,36 +38,39 @@ def etl():
 
     # ---- invoice_no ----
     @log_decorator
-    task_group()
+    @task_group
     def clean_invoice_no(df: DataFrame) -> DataFrame:
-        @task()
-        def task01():
+        @task
+        def task01(df : DataFrame):
             if df["invoice_no"].duplicated().sum() == 0:
                 print("No duplicate invoice numbers found.")
-                return df
             else:
                 print(f"Duplicate invoice numbers found: {df['invoice_no'].duplicated().sum()}")
-        @task()
-        def task02():
+            return df
+        @task
+        def task02(df : DataFrame):
             if df['invoice_no'].str.match(r'^I\d+$').all() == True:
                 print("All invoice numbers are valid.")
-                return df
             else:
                 print("Some invoice numbers are invalid.")
-        @task()
-        def task03():
+            return df
+        @task
+        def task03(df : DataFrame):
             if df["invoice_no"].isnull().sum() == 0:
                 print("No null invoice numbers found.")
-                return df
             else:
                 print(f"Null invoice numbers found: {df['invoice_no'].isnull().sum()}")
+            return df
 
 
-        task03(task02(task01(df)))
+        df1 = task01(df)
+        df2 = task02(df1)
+        df3 = task03(df2)
+        return df3
 
     # --- customer_id ---
     @log_decorator
-    @task()
+    @task
     def clean_customer_id(df: DataFrame) -> DataFrame:
         try:
             if 'customer_id' in df.columns:
@@ -78,7 +82,7 @@ def etl():
 
     # --- gender ---
     @log_decorator
-    @task()
+    @task
     def clean_gender(df: DataFrame) -> DataFrame:
         try:
             if 'gender' in df.columns:
@@ -90,8 +94,8 @@ def etl():
             return df
 
     # --- age ---
-    @log_decorator
-    @task()
+   # @log_decorator
+    @task
     def clean_age(df: DataFrame) -> DataFrame:
         try:
             if 'age' in df.columns:
@@ -102,8 +106,8 @@ def etl():
             return df
 
     # --- price ---
-    @log_decorator
-    @task()
+    #@log_decorator
+    @task
     def clean_price(df: DataFrame) -> DataFrame:
         try:
             if 'price' in df.columns:
@@ -115,7 +119,7 @@ def etl():
 
     # --- payment_method ---
     @log_decorator
-    @task()
+    @task
     def clean_payment_method(df: DataFrame) -> DataFrame:
         try:
             if 'payment_method' in df.columns:
@@ -128,7 +132,7 @@ def etl():
 
     # --- invoice_date ---
     @log_decorator
-    @task()
+    @task
     def clean_invoice_date(df: DataFrame) -> DataFrame:
         try:
             if 'invoice_date' in df.columns:
@@ -140,7 +144,7 @@ def etl():
 
     # --- shopping_mall ---
     @log_decorator
-    @task()
+    @task
     def clean_shopping_mall(df: DataFrame) -> DataFrame:
         try:
             if 'shopping_mall' in df.columns:
@@ -155,7 +159,7 @@ def etl():
 
     #======== Load  ===========
 
-    @task()
+    @task
     def load(df: DataFrame):
         df.to_sql(
             name="retaildata",
