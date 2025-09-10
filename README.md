@@ -1,23 +1,115 @@
 
-https://www.kaggle.com/datasets/mehmettahiraslan/customer-shopping-dataset?select=customer_shopping_data.csv
+# Retail Flow
+
+## 1. About the project
+This project builds a simple data pipeline for retail data.
+It does ETL (extract, data quality checks) using pandas.
+Airflow runs the pipeline. MinIO is used to store XCom objects (like pandas DataFrames).
+MySQL stores results.Postgresql used metadata.
+
+## 2. Pipeline image
+The pipeline image is here:
+docs/images/pipline.png
+
+![Pipline](docs/images/pipline.png)
+
+## 3. How to start the project
+
+1. Clone the repo:
+```
+git clone <repo-url>
+cd <repo-name>
+```
+
+2. Put the `.env` file in the project root (see sample below).
+
+3. (Optional) If you have SQL init files for MySQL, put them in mysql-init/ folder.
+Docker will run them automatically on MySQL start.
+
+4. Start Airflow and other services:
+
+- With Astro CLI:
+```
+astro dev start
+```
+
+- Or with Docker Compose:
+```
+docker-compose up -d
+```
+
+5. Open Airflow UI:
+- http://localhost:8080
+
+6. Run or check DAGs(before add airflow connections):
+- Use Airflow UI or
+```
+astro dev run <dag_id>
+```
+
+## 4. Airflow connections (Conn IDs)
+
+We use these Airflow connections:
+
+- retail — MinIO (S3 API)
+![Retail MinIO Connection](docs/images/retail_minio_conn.png)
+![MinIO Connection Extra Fields](docs/images/minio-extra-fields.png)
+
+
+- retailflow — MySQL
+![Retailflow MySQL Connection](docs/images/retailflow_mysql_conn.png)
+
+All connection screenshots are in docs/images/ folder.
+
+## 5. XCom backend — MinIO
+
+We use MinIO as the XCom backend.
+Pandas DataFrames and other objects are stored in MinIO.
+Airflow keeps only references in XCom.
+Screenshot: docs/images/xcom_minio.png
+
+## 6. MySQL init files
+
+If you want MySQL to run SQL files on start, put *.sql files in mysql-init/.
+Docker mounts this folder to /docker-entrypoint-initdb.d automatically.
+
+## 7. Sample `.env` file
+
+```
+# MySQL
+MYSQL_ROOT_PASSWORD=admin
+MYSQL_USER=admin
+MYSQL_PASSWORD=admin
+MYSQL_DATABASE=retailflow
+
+# MinIO / S3 Airflow connection
+AIRFLOW_CONN_MINIO_LOCAL='{
+    "conn_type":"aws",
+    "extra":{
+        "aws_access_key_id":"minioadmin",
+        "aws_secret_access_key":"minioadmin",
+        "endpoint_url":"http://minio:9000"
+    }
+}'
+
+# Object Storage Custom XCom Backend
+AIRFLOW__CORE__XCOM_BACKEND="airflow.providers.common.io.xcom.backend.XComObjectStorageBackend"
+AIRFLOW__COMMON_IO__XCOM_OBJECTSTORAGE_PATH="s3://retail@retail/xcom"
+AIRFLOW__COMMON_IO__XCOM_OBJECTSTORAGE_THRESHOLD="0"
+AIRFLOW__COMMON_IO__XCOM_OBJECTSTORAGE_COMPRESSION="zip"
+```
+
+- You can change MYSQL_PASSWORD or other values.
+- If you want another XCom connection, change AIRFLOW__COMMON_IO__XCOM_OBJECTSTORAGE_PATH.
 
 
 
+## 8. File and screenshot locations
 
-Context
+- Pipeline image: docs/images/pipline.png
+- MinIO connection screenshot: docs/images/retail_minio_conn.png
+- MySQL connection screenshot: docs/images/retailflow_mysql_conn.png
+- XCom MinIO screenshot: docs/images/xcom_minio.png
+- MySQL init SQL files: mysql-init/
 
-Welcome to the shopping world of Istanbul! Our dataset contains shopping information from 10 different shopping malls between 2021 and 2023. We have gathered data from various age groups and genders to provide a comprehensive view of shopping habits in Istanbul. The dataset includes essential information such as invoice numbers, customer IDs, age, gender, payment methods, product categories, quantity, price, order dates, and shopping mall locations. We hope that this dataset will serve as a valuable resource for researchers, data analysts, and machine learning enthusiasts who want to gain insights into shopping trends and patterns in Istanbul. Explore the dataset and discover the fascinating world of Istanbul shopping!
-Content
-
-Attribute Information:
-
-    invoice_no: Invoice number. Nominal. A combination of the letter 'I' and a 6-digit integer uniquely assigned to each operation.
-    customer_id: Customer number. Nominal. A combination of the letter 'C' and a 6-digit integer uniquely assigned to each operation.
-    gender: String variable of the customer's gender.
-    age: Positive Integer variable of the customers age.
-    category: String variable of the category of the purchased product.
-    quantity: The quantities of each product (item) per transaction. Numeric.
-    price: Unit price. Numeric. Product price per unit in Turkish Liras (TL).
-    payment_method: String variable of the payment method (cash, credit card or debit card) used for the transaction.
-    invoice_date: Invoice date. The day when a transaction was generated.
-    shopping_mall: String variable of the name of the shopping mall where the transaction was made.
+---
