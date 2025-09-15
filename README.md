@@ -17,8 +17,8 @@ docs/images/pipline.png
 
 1. Clone the repo:
 ```
-git clone <repo-url>
-cd <repo-name>
+git clone https://github.com/Rafo044/Retailflow.git
+cd Retailflow
 ```
 
 2. Put the `.env` file in the project root (see sample below).
