@@ -1,0 +1,72 @@
+# ============================
+# GitHub Linguist for Data Science / Data Engineering
+# ============================
+
+# --- Notebooks ---
+*.ipynb            linguist-language=Jupyter Notebook
+
+# --- Python & R ---
+*.py               linguist-language=Python
+*.r                linguist-language=R
+*.R                linguist-language=R
+*.rmd              linguist-language=RMarkdown
+*.Rmd              linguist-language=RMarkdown
+
+# --- SQL / Databases ---
+*.sql              linguist-language=PLpgSQL
+*.psql             linguist-language=PLpgSQL
+*.pgsql            linguist-language=PLpgSQL
+
+# --- Templates (Airflow, Jinja2, dbt, etc.) ---
+*.j2               linguist-language=Jinja
+*.jinja            linguist-language=Jinja
+*.jinja2           linguist-language=Jinja
+*.tpl              linguist-language=Jinja
+
+# --- Config / Data Formats ---
+*.yml              linguist-language=YAML
+*.yaml             linguist-language=YAML
+*.toml             linguist-language=TOML
+*.ini              linguist-language=INI
+*.conf             linguist-language=INI
+
+# --- Markup / Docs ---
+*.md               linguist-language=Markdown
+*.markdown         linguist-language=Markdown
+*.rst              linguist-language=reStructuredText
+*.tex              linguist-language=TeX
+
+# --- Data files ---
+*.csv              linguist-language=CSV
+*.tsv              linguist-language=CSV
+*.parquet          linguist-language=Parquet
+*.avro             linguist-language=Avro
+*.orc              linguist-language=ORC
+*.json             linguist-language=JSON
+*.ndjson           linguist-language=JSON
+*.xml              linguist-language=XML
+
+# --- Scripts & Automation ---
+*.sh               linguist-language=Shell
+*.bash             linguist-language=Shell
+*.bat              linguist-language=Batchfile
+*.ps1              linguist-language=PowerShell
+*.make             linguist-language=Makefile
+
+# --- Workflow / Pipeline ---
+*.dag              linguist-language=Python
+*.airflow          linguist-language=Python
+*.dbt              linguist-language=SQL
+
+# --- Docker / Infra ---
+Dockerfile         linguist-language=Dockerfile
+*.dockerfile       linguist-language=Dockerfile
+*.tf               linguist-language=HCL
+*.tfvars           linguist-language=HCL
+*.hcl              linguist-language=HCL
+
+# --- Ignore vendored / generated (optional tweak) ---
+vendor/**          linguist-vendored=false
+dist/**            linguist-generated=false
+*.min.js           linguist-generated=false
+*.bundle.js        linguist-generated=false
