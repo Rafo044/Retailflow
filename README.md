@@ -20,6 +20,7 @@ docs/images/pipline.png
 git clone <repo-url>
 cd <repo-name>
 ```
+
 2. Put the `.env` file in the project root (see sample below).
 
 3. (Optional) If you have SQL init files for MySQL, put them in mysql-init/ folder.
