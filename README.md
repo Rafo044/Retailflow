@@ -102,7 +102,6 @@ AIRFLOW__COMMON_IO__XCOM_OBJECTSTORAGE_COMPRESSION="zip"
 - You can change MYSQL_PASSWORD or other values.
 - If you want another XCom connection, change AIRFLOW__COMMON_IO__XCOM_OBJECTSTORAGE_PATH.
 
-
 ## 8. Airflow UI
 
 ### Airflow dag view
