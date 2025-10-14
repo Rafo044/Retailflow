@@ -11,14 +11,14 @@ MySQL stores results.Postgresql used metadata.
 The pipeline image is here:
 docs/images/pipline.png
 
-![Pipline](docs/images/pipline.png)
+![Pipline](images/pipline.png)
 
 ## 3. How to start the project
 
 1. Clone the repo:
 ```
-git clone https://github.com/Rafo044/Retailflow.git
-cd Retailflow
+git clone <repo-url>
+cd <repo-name>
 ```
 
 2. Put the `.env` file in the project root (see sample below).
@@ -52,14 +52,14 @@ astro dev run <dag_id>
 We use these Airflow connections:
 
 - retail — MinIO (S3 API)
-![Retail MinIO Connection](docs/images/retail_minio_conn.png)
-![MinIO Connection Extra Fields](docs/images/minio-extra-fields.png)
+![Retail MinIO Connection](images/retail_minio_conn.png)
+![MinIO Connection Extra Fields](images/minio-extra-fields.png)
 
 
 - retailflow — MySQL
-![Retailflow MySQL Connection](docs/images/retailflow_mysql_conn.png)
+![Retailflow MySQL Connection](images/retailflow_mysql_conn.png)
 
-All connection screenshots are in docs/images/ folder.
+All connection screenshots are in /docs/images/ folder.
 
 ## 5. XCom backend — MinIO
 
@@ -102,13 +102,14 @@ AIRFLOW__COMMON_IO__XCOM_OBJECTSTORAGE_COMPRESSION="zip"
 - You can change MYSQL_PASSWORD or other values.
 - If you want another XCom connection, change AIRFLOW__COMMON_IO__XCOM_OBJECTSTORAGE_PATH.
 
+
 ## 8. Airflow UI
 
 ### Airflow dag view
-![Airflow Dag view](docs/images/dagview.png)
+![Airflow Dag view](images/dagview.png)
 
 ### Airflow connection list
-![Airflow connection list](docs/images/airflow_conn_list.png)
+![Airflow connection list](images/airflow_conn_list.png)
 
 ## 9. File and screenshot locations
 
