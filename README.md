@@ -11,7 +11,7 @@ MySQL stores results.Postgresql used metadata.
 The pipeline image is here:
 docs/images/pipline.png
 
-![Pipline](images/pipline.png)
+![Pipline](docs/images/pipline.png)
 
 ## 3. How to start the project
 
