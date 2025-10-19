@@ -11,7 +11,7 @@ MySQL stores results.Postgresql used metadata.
 The pipeline image is here:
 docs/images/pipline.png
 
-![Pipline](images/pipline.png)
+![Pipline](docs/images/pipline.png)
 
 ## 3. How to start the project
 
@@ -52,12 +52,12 @@ astro dev run <dag_id>
 We use these Airflow connections:
 
 - retail — MinIO (S3 API)
-![Retail MinIO Connection](images/retail_minio_conn.png)
-![MinIO Connection Extra Fields](images/minio-extra-fields.png)
+![Retail MinIO Connection](docs/images/retail_minio_conn.png)
+![MinIO Connection Extra Fields](docs/images/minio-extra-fields.png)
 
 
 - retailflow — MySQL
-![Retailflow MySQL Connection](images/retailflow_mysql_conn.png)
+![Retailflow MySQL Connection](docs/images/retailflow_mysql_conn.png)
 
 All connection screenshots are in /docs/images/ folder.
 
@@ -106,10 +106,10 @@ AIRFLOW__COMMON_IO__XCOM_OBJECTSTORAGE_COMPRESSION="zip"
 ## 8. Airflow UI
 
 ### Airflow dag view
-![Airflow Dag view](images/dagview.png)
+![Airflow Dag view](docs/images/dagview.png)
 
 ### Airflow connection list
-![Airflow connection list](images/airflow_conn_list.png)
+![Airflow connection list](docs/images/airflow_conn_list.png)
 
 ## 9. File and screenshot locations
 
